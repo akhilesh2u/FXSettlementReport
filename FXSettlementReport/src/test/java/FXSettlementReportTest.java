@@ -1,24 +1,26 @@
 
-/**
-* The FXTransactionReportTestData is the main class where FX transactions are passed for the generation of report.
-*
-* @author  Akhilesh Perla
-* @version 1.0
-* @since   2017-04-17 
-*/
+/*
+* @author Akhiles Perla
+* 
+* */
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Currency;
-
 import java.util.List;
-import java.util.Map;
 
-import java.util.stream.Collectors;
+import junit.framework.TestCase;
 
-public class FXTransactionReportTestData {
+public class FXSettlementReportTest extends TestCase {
+	
+	private List<FXTransactionDataModel> listData = new ArrayList<FXTransactionDataModel>();
 
-	public static void main(String args[]) {
-		List<FXTransactionDataModel> listData = new ArrayList<FXTransactionDataModel>();
+	public FXSettlementReportTest(String testName) {
+		super(testName);
+	}
+
+	protected void setUp() throws Exception {
+		super.setUp();
+		
 		
 		/*
 		 * Create the FX transaction details by passing the values
@@ -48,10 +50,18 @@ public class FXTransactionReportTestData {
 		listData.add(data4);
 		listData.add(data5);
 		listData.add(data6);
-		listData.add(data7);
+		listData.add(data7);	}
 
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		listData= null;
+	}
+
+	public void testGenerateFXTransactionReport() {
+		boolean success = true;
 		FXTransactionReport fxTransactionReport = new FXTransactionReport();
-		fxTransactionReport.generateFXTransactionReport(listData);
+		boolean status = fxTransactionReport.generateFXTransactionReport(listData);
+		assertEquals(status, success);
 	}
 
 }

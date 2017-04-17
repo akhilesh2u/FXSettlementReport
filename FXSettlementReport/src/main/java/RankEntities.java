@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class RankEntities {
 
 	/* Rank the entities based on the Transaction type */
-	public List<RankingDataModel> RankEntitiesByTransaction(List<FXTransactionDataModel> listData,char transactionType)
+	public List<RankingDataModel> rankEntitiesByTransaction(List<FXTransactionDataModel> listData,char transactionType)
 	{
 
         double[] score = {Double.MIN_VALUE};
