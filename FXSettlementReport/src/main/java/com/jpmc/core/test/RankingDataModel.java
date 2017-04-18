@@ -38,5 +38,10 @@ public class RankingDataModel {
 	public void setEntity(String entity) {
 		this.entity = entity;
 	}
-
+	public boolean equals(Object obj){
+		if(this.entity.equals(((RankingDataModel)obj).entity)){
+			return true;
+		}
+		return false;
+	}
 }
