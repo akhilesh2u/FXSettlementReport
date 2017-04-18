@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
+import com.jpmc.core.test.FXTransactionDataModel;
+import com.jpmc.core.test.FXTransactionReport;
+
 import junit.framework.TestCase;
 
 public class FXSettlementReportTest extends TestCase {

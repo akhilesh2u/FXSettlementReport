@@ -1,3 +1,4 @@
+package com.jpmc.core.test;
 /**
 * RankingDataModel is POJO which stores the entity transaction details with rank
 *

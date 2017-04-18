@@ -1,3 +1,4 @@
+package com.jpmc.core.test;
 /**
 * RankEntities is a utility which will rank the entities data based on Transaction Type
 *

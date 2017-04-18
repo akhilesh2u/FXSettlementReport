@@ -1,3 +1,4 @@
+package com.jpmc.core.test;
 
 /**
 * The FXTransactionReportTestData is the main class where FX transactions are passed for the generation of report.

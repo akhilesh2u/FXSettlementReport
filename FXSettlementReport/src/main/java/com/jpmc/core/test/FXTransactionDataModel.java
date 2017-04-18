@@ -1,3 +1,4 @@
+package com.jpmc.core.test;
 
 /**
 * FXSettlementDataModel is a POJO class which stores the FX Transactions
@@ -12,7 +13,7 @@ import java.util.Currency;
 import java.util.stream.IntStream;
 
 
-class FXTransactionDataModel {
+public class FXTransactionDataModel {
 
 	private String entity;
 	private char transcationType;
