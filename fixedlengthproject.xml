@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+<flow name="DW-FixedWidth-Processing">
+        <file:inbound-endpoint responseTimeout="10000" doc:name="File" moveToDirectory="output" path="C:\SampleFlatFile"/>
+        <dw:transform-message metadata:id="df9fa7d7-3755-4d85-896b-601db1d6960e" doc:name="Transform Message">
+            <dw:input-payload mimeType="text/plain">
+                <dw:reader-property name="schemaPath" value="TextFile.ffd"/>
+            </dw:input-payload>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 urn:iso:std:iso:20022:tech:xsd:pain.001.001.02
+---
+{
+	ns0#Document: {
+		ns0#"pain.001.001.02": {
+			ns0#GrpHdr: {
+				ns0#CreDtTm: payload.CreDtTm,
+				ns0#BtchBookg: false,
+				ns0#InitgPty: {
+					ns0#Nm: payload.BkPtyIdOrNm,
+					ns0#Id: {
+						ns0#OrgId: {
+							ns0#PrtryId: {
+								ns0#Id: payload.BkPtyIdOrNm
+							}
+						}
+					}
+				}
+			},
+			ns0#PmtInf: {
+				ns0#PmtMtd: "TRA",
+				ns0#PmtTpInf: {
+					ns0#LclInstrm: {
+						ns0#Cd: "X12"
+					}
+				},
+				ns0#ReqdExctnDt: payload.ReqdExctnDt,
+				ns0#Dbtr: {
+					ns0#Nm: "Choice Earth(Florida)"
+				},
+				ns0#DbtrAcct: {
+					ns0#Id: {
+						ns0#PrtryAcct: {
+							ns0#Id: payload.DbtrAcct_ID_PrtryAcct_ID 
+						}
+					}
+				},
+				ns0#DbtrAgt: {
+					ns0#FinInstnId: {
+						ns0#CmbndId: {
+							ns0#ClrSysMmbId: {
+								ns0#Id: "CHERTH345"
+							}
+						}
+					}
+				},
+				(payload map ((payload01 , indexOfPayload01) -> {
+					ns0#CdtTrfTxInf: {
+						ns0#PmtId: {
+							ns0#EndToEndId: payload01.EndToEndId as :number
+						},
+						ns0#Amt: {
+							ns0#InstdAmt @(Ccy: "USD"): payload01.CdtTrfTxInf_Amt_InstdAmt
+						},
+						ns0#CdtrAgt: {
+							ns0#FinInstnId: {
+								ns0#CmbndId: {
+									ns0#ClrSysMmbId: {
+										ns0#Id: "12435"
+									}
+								}
+							}
+						},
+						ns0#Cdtr: {
+							ns0#Nm: payload01.Nm,
+							ns0#PstlAdr: {
+								ns0#AdrLine: payload01.AdrLine,
+								ns0#PstCd: payload01.PstCd,
+								ns0#TwnNm: payload01.TwnNm,
+								ns0#Ctry: payload01.Ctry
+							}
+						},
+						ns0#CdtrAcct: {
+							ns0#Id: {
+								ns0#PrtryAcct: {
+									ns0#Id: payload01.CdtrAcct_ID_PrtryAcct_ID
+								}
+							}
+						}
+					}
+				}))
+			}
+		}
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+
+
+        <file:outbound-endpoint path="C:\SampleOutputFlatFile" outputPattern="output.txt" responseTimeout="10000" doc:name="File"/>
+    </flow>
+</mule>
