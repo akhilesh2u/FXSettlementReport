@@ -1,0 +1,25 @@
+form: FIXEDWIDTH
+name: 'TextFile'
+values: 
+- { name: 'A', usage: M, type: String, length: 1 }
+- { name: 'Nm', usage: M, type: String, length: 35 }
+- { name: 'B', usage: M, type: String, length: 9 }
+- { name: 'CdtrAcct_ID_PrtryAcct_ID', usage: M, type: String, length: 11 }
+- { name: 'C', usage: M, type: String, length: 25 }
+- { name: 'DbtrAcct_ID_PrtryAcct_ID', usage: M, type: String, length: 10 }
+- { name: 'D', usage: M, type: String, length: 10 }
+- { name: 'CdtTrfTxInf_Amt_InstdAmt', usage: M, type: String, length: 11 }
+- { name: 'EndToEndId', usage: M, type: String, length: 9 }
+- { name: 'BkPtyIdOrNm', usage: M, type: String, length: 14 }
+- { name: 'E', usage: M, type: String, length: 4 }
+- { name: 'ReqdExctnDt', usage: M, type: String, length: 8 }
+- { name: 'CreDtTm', usage: M, type: String, length: 20 }
+- { name: 'F', usage: M, type: String, length: 1 }
+- { name: 'TwnNm', usage: M, type: String, length: 7 }
+- { name: 'G', usage: M, type: String, length: 270 }
+- { name: 'AdrLine', usage: M, type: String, length: 34 }
+- { name: 'H', usage: M, type: String, length: 71 }
+- { name: 'PstCd', usage: M, type: String, length: 7 }
+- { name: 'I', usage: M, type: String, length: 119 }
+- { name: 'Ctry', usage: M, type: String, length: 2 }
+- { name: 'field_1', usage: M, type: String, length: 59 }
