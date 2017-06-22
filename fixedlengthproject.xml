@@ -23,14 +23,16 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 	ns0#Document: {
 		ns0#"pain.001.001.02": {
 			ns0#GrpHdr: {
-				ns0#CreDtTm: payload.CreDtTm,
+				ns0#CreDtTm: payload.ReqdExctnDt[0] ++ payload.CreDtTm[0] ,
 				ns0#BtchBookg: false,
+				ns0#NbOfTxs: sizeOf payload,
+				ns0#CtrlSum: payload.CdtTrfTxInf_Amt_InstdAmt reduce ($$ + $) as :number as :string {format: ".00"},
 				ns0#InitgPty: {
-					ns0#Nm: payload.BkPtyIdOrNm,
+					ns0#Nm: payload.BkPtyIdOrNm[0],
 					ns0#Id: {
 						ns0#OrgId: {
 							ns0#PrtryId: {
-								ns0#Id: payload.BkPtyIdOrNm
+								ns0#Id: payload.BkPtyIdOrNm[0]
 							}
 						}
 					}
@@ -43,14 +45,14 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 						ns0#Cd: "X12"
 					}
 				},
-				ns0#ReqdExctnDt: payload.ReqdExctnDt,
+				ns0#ReqdExctnDt: ((payload.ReqdExctnDt[0] as :string) as :date {format: "yyyyMMdd"}) as :string {format: "yyyy-MM-dd"},
 				ns0#Dbtr: {
 					ns0#Nm: "Choice Earth(Florida)"
 				},
 				ns0#DbtrAcct: {
 					ns0#Id: {
 						ns0#PrtryAcct: {
-							ns0#Id: payload.DbtrAcct_ID_PrtryAcct_ID 
+							ns0#Id: payload.DbtrAcct_ID_PrtryAcct_ID[0]
 						}
 					}
 				},
@@ -69,7 +71,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 							ns0#EndToEndId: payload01.EndToEndId as :number
 						},
 						ns0#Amt: {
-							ns0#InstdAmt @(Ccy: "USD"): payload01.CdtTrfTxInf_Amt_InstdAmt
+							ns0#InstdAmt @(Ccy: "USD"): payload01.CdtTrfTxInf_Amt_InstdAmt as :string {format: ".00"} as :number
 						},
 						ns0#CdtrAgt: {
 							ns0#FinInstnId: {
